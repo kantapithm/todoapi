@@ -6,42 +6,39 @@ namespace TodoApi.Models
 {
     public class TodoRepository : ITodoRepository
     {
-        private static ConcurrentDictionary<string, TodoItem> _todos =
-              new ConcurrentDictionary<string, TodoItem>();
-
-        public TodoRepository()
+        private readonly TodoContext _context;
+        public TodoRepository(TodoContext context)
         {
-            Add(new TodoItem { Name = "Item1" });
+            _context = context;
         }
 
         public IEnumerable<TodoItem> GetAll()
         {
-            return _todos.Values;
+            return _context.TodoItems;
         }
 
         public void Add(TodoItem item)
         {
-            item.Key = Guid.NewGuid().ToString();
-            _todos[item.Key] = item;
+            _context.TodoItems.Add(item);
+            _context.SaveChanges();
         }
 
         public TodoItem Find(string key)
         {
-            TodoItem item;
-            _todos.TryGetValue(key, out item);
-            return item;
+            return _context.TodoItems.Find(key);
         }
 
         public TodoItem Remove(string key)
         {
-            TodoItem item;
-            _todos.TryRemove(key, out item);
+            TodoItem item = _context.TodoItems.Find(key);
+            _context.TodoItems.Remove(item);
             return item;
         }
 
         public void Update(TodoItem item)
         {
-            _todos[item.Key] = item;
+            _context.TodoItems.Update(item);
+            _context.SaveChanges();
         }
     }
 }
