@@ -29,8 +29,13 @@ namespace TodoApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkSqlite(); 
-            services.AddDbContext<TodoContext>(options => options.UseSqlite("Filename=./todo.sqlite"));
+            if(!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME"))) {
+                services.AddEntityFrameworkSqlServer();
+                services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration["DatabaseAzure:Location"]));
+            } else {
+                services.AddEntityFrameworkSqlite(); 
+                services.AddDbContext<TodoContext>(options => options.UseSqlite(Configuration["DatabaseLocal:Location"]));
+            }
             // Add framework services.
             services.AddMvc();
             services.AddSingleton<ITodoRepository, TodoRepository>();
