@@ -23,12 +23,12 @@ namespace TodoApi.Models
             _context.SaveChanges();
         }
 
-        public TodoItem Find(string key)
+        public TodoItem Find(int key)
         {
             return _context.TodoItems.Find(key);
         }
 
-        public TodoItem Remove(string key)
+        public TodoItem Remove(int key)
         {
             TodoItem item = _context.TodoItems.Find(key);
             _context.TodoItems.Remove(item);

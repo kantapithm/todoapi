@@ -6,8 +6,8 @@ namespace TodoApi.Models
     {
         void Add(TodoItem item);
         IEnumerable<TodoItem> GetAll();
-        TodoItem Find(string key);
-        TodoItem Remove(string key);
+        TodoItem Find(int key);
+        TodoItem Remove(int key);
         void Update(TodoItem item);
     }
 }

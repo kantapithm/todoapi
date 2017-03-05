@@ -20,7 +20,7 @@ namespace TodoApi.Controllers
       }
 
       [HttpGet("{key}", Name = "GetTodo")]
-      public IActionResult GetById(string key)
+      public IActionResult GetById(int key)
       {
         var item = _todoRepository.Find(key);
         if (item == null)
@@ -37,11 +37,11 @@ namespace TodoApi.Controllers
           return BadRequest();
         }
         _todoRepository.Add(item);
-        return CreatedAtRoute("GetTodo", new {id = item.Key}, item);
+        return CreatedAtRoute("GetTodo", new {key = item.Key}, item);
       }
 
       [HttpPut("{key}")]
-      public IActionResult Update(string key, [FromBody] TodoItem item)
+      public IActionResult Update(int key, [FromBody] TodoItem item)
       {
         if (item == null || item.Key != key)
         {
@@ -61,7 +61,7 @@ namespace TodoApi.Controllers
       }
 
       [HttpDelete("{key}")]
-      public IActionResult Delete(string key)
+      public IActionResult Delete(int key)
       {
         var todo = _todoRepository.Find(key);
         if (todo == null)
