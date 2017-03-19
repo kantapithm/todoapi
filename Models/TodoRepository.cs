@@ -12,9 +12,15 @@ namespace TodoApi.Models
             _context = context;
         }
 
-        public IEnumerable<TodoItem> GetAll()
+        public IEnumerable<TodoItem> GetAll(string userid)
         {
-            return _context.TodoItems;
+            List<TodoItem> items = new List<TodoItem>();
+            foreach(TodoItem item in _context.TodoItems) {
+                if(item.Owner.ToString() == userid) {
+                    items.Add(item);
+                }
+            }
+            return items;
         }
 
         public void Add(TodoItem item)

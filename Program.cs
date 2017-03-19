@@ -22,6 +22,7 @@ namespace TodoApi
                 .UseConfiguration(config)
                 .UseKestrel()
                 .UseContentRoot(Directory.GetCurrentDirectory())
+                .UseUrls("http://localhost:5100")
                 .UseIISIntegration()
                 .UseStartup<Startup>()
                 .Build();

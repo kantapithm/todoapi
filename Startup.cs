@@ -30,12 +30,12 @@ namespace TodoApi
         public void ConfigureServices(IServiceCollection services)
         {
             /*if(!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("WEBSITE_SITE_NAME"))) { */
-                services.AddEntityFrameworkSqlServer();
-                services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration["DatabaseAzure:Location"]));
-            /*} else {
-                services.AddEntityFrameworkSqlite(); 
-                services.AddDbContext<TodoContext>(options => options.UseSqlite(Configuration["DatabaseLocal:Location"]));
-            }*/
+                // services.AddEntityFrameworkSqlServer();
+                // services.AddDbContext<TodoContext>(options => options.UseSqlServer(Configuration["DatabaseAzure:Location"]));
+            // /*} else {
+            services.AddEntityFrameworkSqlite(); 
+            services.AddDbContext<TodoContext>(options => options.UseSqlite(Configuration["DatabaseLocal:Location"]));
+            // }*/
             // Add framework services.
             services.AddMvc();
             services.AddSingleton<ITodoRepository, TodoRepository>();
